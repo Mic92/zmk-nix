@@ -7,6 +7,7 @@
 , board
 , shield ? null
 , parts ? [ "left" "right" ]
+, westBuildFlags ? []
 , ... } @ args:
 
 let
@@ -21,6 +22,7 @@ in runCommand name ({
     board = lib.replaceStrings [ "%PART%" ] [ part ] board;
     shield = if shield != null then lib.replaceStrings [ "%PART%" ] [ part ] shield else shield;
     westDeps = args.westDeps or westDeps;
+    inherit westBuildFlags;
   })
 ))) ''
   mkdir $out

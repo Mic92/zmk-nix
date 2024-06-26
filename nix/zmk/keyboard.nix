@@ -10,6 +10,7 @@
 , name ? "zmk"
 , config ? "config"
 , extraCmakeFlags ? []
+, westBuildFlags ? []
 , ... } @ args: buildZephyrPackage ((lib.attrsets.removeAttrs args [ "config" "extraCmakeFlags" ]) // {
   inherit name;
 
@@ -18,6 +19,7 @@
   westBuildFlags = [
     "-s" "zmk/app"
     "-b" board
+  ] ++ westBuildFlags ++ [
     "--"
   ] ++ lib.optional (shield != null) "-DSHIELD=${shield}" ++ extraCmakeFlags;
 
